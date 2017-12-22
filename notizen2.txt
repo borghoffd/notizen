@@ -187,3 +187,40 @@ Expertenwissen: Varialben erstellen - var
 - setTimeout hält die for-Schleife nicht an, diese zählt durch während
 setTimeout noch wartet
 - nach dem Ausführen der for-Schleife hat x den Wert 3
+
+Expertenwissen: Variablen erstellen - let
+- var wird auf Funktionsebene definiert, let auf Blockebene
+    function() {
+        if(Bedingung){
+            let i = 5;
+        }
+        console.log(i);
+    }
+-> intern sieht das so aus:
+    function() {
+        if(Bedingung){
+            let i;
+            i = 5;
+        }
+        console.log(i);
+    }
+    -> i existiert nur innerhalb der if-Funktion, innerhalb des BLOCKS
+
+Konzept: Variablen von "außerhalb"
+- sehr wichtiges Konzept
+- Jede Funktion sollte nur auf 2 Arten Variablen verwenden:
+    thix.xyz
+    Parameter
+- auf Variablen von "außerhalb" sollte NICHT zugegriffen werden
+-> Ausnahme sind Callback-Funktionen
+- Wenn ein Objekt als Parameter übergeben wird:
+    - Dieses Objekt sollte nicht verändert werden!
+
+Expertenwissen: DOM ist langsam
+- Änderungen am DOM sind mit einem gewissen Rechenaufwand verbunden
+
+Expertenwissen: Komprimierung von JavaScript
+- Warum? kürzere Ladenzeiten für User
+- fertige Tools:
+UglifyJS
+
