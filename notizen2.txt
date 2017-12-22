@@ -1,0 +1,189 @@
+Prototype Inheritance
+- Klassen werden erst seit ES6 unterstützt
+- davor wurde Prototype Inheritance benutzt
+    let student = {
+        getFullName: function() {
+            console.log(this.firstname + " " + this.lastname);
+        }
+    };
+    // Ist nun ein Objekt, keine Klasse
+    let max = {
+        firstname: "Max",
+        lastname: "Schmidt"
+    };
+    max.__proto__ = student;
+ODER 
+    // Stellt den Konstuktor dar
+    function Student(firstname, lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+    Student.prototype.getFullName = function() {
+        console.log("Student.prototype.getFullName()");
+    }
+    let s = new Student("Peter", "Otto");
+    s.getFullName();
+- Klassenschreibweise ist auf jeden Fall zu bevorzugen, da dies 
+die neue und bessere Art ist
+
+jQuery: Grundlagen
+- vereinfacht den Code
+jQuery(document).ready(function($){}
+- Element finden:
+    let element = $("#element");
+- CSS-Eigenschaft ändern
+    $("#element").css("color", "green");
+- Method-Chaining ist möglich
+    $(".absatz").css("color", "white").css("background-color", "green");
+
+jQuery & Events
+- ohne jQuery:
+    document.getElementById("id").addEventlistener("click", function () {
+        ...
+    }, false);
+- mit jQuery:
+    $("#id").click(function() {
+        ...
+    });
+-------------------------------------------------------------------------
+    jQuery(document).ready(function($){
+        $("p").click(function() {
+            $(this).css("background-color", "green");
+        });
+    });
+jQuery: Elemente durchgehen
+- .each()-Schleife
+    $("p").each(function(i, element){
+        if(i % 2 == 0) {
+            $(this).css("background-color", "green");
+        } else {
+            $(this).css("background-color", "red");
+        }
+    });
+
+jQuery: Wichtige Methoden
+- .css("color","black");
+    - setze eine CSS-Eigenschaft eines Elementes
+- .css("color")
+    - Lese eine CSS-Eigenschaft eines Elementes aus
+- .addClass("foo")
+    - füge eine CSS-Klasse hinzu
+- .removeClass("foo")
+    - entferne eine CSS-Klasse
+- .attr("foo","bar")
+    - setze ein Attribut eines elementes
+
+[...]
+
+jQuery-Plugin:
+- eigenes jQuery Plugin schreiben:
+jQuery.fn.lightbox = function() {
+    ...
+}
+
+jQuery - Expertenwissen:
+- $("#test").hide() 
+- $("#test").show()
+- $("#test").toggle()
+- mehrere Selektoren benutzen
+$("#test, #test2").show()
+
+jQuery: Parameter übergeben
+Beispiel 1:
+let f = function(a) {
+    a = 20;
+}
+let b = 30;
+f(b);
+console.log(b);
+-> Ausgabe ist 30
+- b ist ein primitiver Datentyp (Zahl, String, quasi alles was kein 
+Objekt ist)
+- Es wird eine Kopie der Variable erstellt
+- Fazit: Die Variable außerhalb der Funktion ändert sich nicht
+
+Beispiel 2:
+let f = function(a) {
+    a.age=20;
+}
+let b = {age:30};
+f(b);
+console.log(b.age)
+-> Ausgabe ist 20
+- b ist ein Objekt, bzw Array
+- Es wird eine "Kopie der Referenz" übergeben (wie ein Pointer in C)
+
+Beispiel 3:
+let f = function(a) {
+    a = {age:20};
+}
+let b = {age:30};
+f(b);
+console.log()b.age;
+-> Ausgabe ist 30
+- Der ursprüngliche Wert bleibt erhalten, weil ein neues Objekt 
+erstellt wurde!
+
+Expertenwissen: Der Event-Loop
+- Ein Programm hat oft mehrere simultane Ausführüngsstränge
+- Event Loop vereinfacht das Arbeiten mit asynchronen Ereignissen
+- ALLERDINGS müssen wir darauf achten das wir den Event-Loop nicht
+blockieren
+
+Funktionen: Rückgabewerte
+let createCounter = function(counter) {
+    let incrementCounter = function(){
+        counter = counter + 1;
+        console.log(counter);
+    }
+    return incrementCounter;
+}
+let c = createCounter(0);
+c(); -> Variable counter kann nun nur noch hochgezählt werden
+
+Expertenwissen: Variablen erstellen
+- 3 Möglichkeiten: let, var und const
+- Unterschied in Gültigkeitsbereichen
+
+Expertenwissen: Variablen erstellen - const
+- const i = 5; -> Hier wird eine Konstante erstellt
+- Diese Variable kann später nicht mehr verändert werden
+- Konstante wird komplett in Großbuchstaben geschrieben
+-> const MAX_DURATION = 60;
+- Wenn ein Array als Konstante benutzt wird, ist es immer noch möglich ein Element
+hinzufügen
+-> Durch das Hinzufügen bleibt das Array immer noch das gleiche Array
+    const ITEMS = ["Apfel", "Birne"];
+    ITEMS.push("Ei");
+- Konstanten sind ideal für die Konfiguration eines Programms
+
+Expertenwissen: Varialben erstellen - var
+- var verhält sich anders als let, Fehlersuche extrem aufwendig
+- var i = 5;
+-> Hiermit wird eine neue Variable angelegt, was aber genau passiert?
+- Scoping in JS:
+ function() {
+     console.log("Hallo");
+     var i = 5;
+     console.log(i);
+ }
+-> der obige Code wird intern zu: 
+ function() {
+     var i;
+     console.log("Hallo");
+     i = 5;
+     console.log(i);
+ }
+- Das hat zur Folge, Codebeispiel:
+    let f = function() {
+        for(var x=0;x<=2;x++) {
+            setTimeout(function() {
+                console.log(x);
+            },1000);
+        }
+    }
+    f();
+-> Es wird 3mal die Zahl 3 ausgegeben
+- setTimeout hält die for-Schleife nicht an, diese zählt durch während
+setTimeout noch wartet
+- nach dem Ausführen der for-Schleife hat x den Wert 3

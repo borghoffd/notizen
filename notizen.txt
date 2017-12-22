@@ -1,0 +1,143 @@
+Kurs "Modernes Javascript(ES6): jQuery, node.js und viel Praxis!" auf Udemy:
+https://www.udemy.com/javascript-bootcamp/
+
+ES6 / ES5 - Was ist das?
+- 1996 erste Version von Javascript
+- 1997 ECMAScript -> Standardisierte Version
+- 2009 ECMAScript (ES5) seit dem:
+- Neue Schleifen, let zum Definieren von Variablen
+- Jedes Jahr eine neue Version, 2016 kam ES7 raus -> nur eine kleine 
+Erweiterung zu ES6
+
+Funktionen
+- Dienen dazu Code wiederzuverwenden und strukturieren
+- 1. Schreibweise:
+    function run() {
+        befehl1;
+        befehl2;
+    }
+-> Funktion mit Name run wird erstellt
+-2. Schreibweise:
+    let run = function() {
+        befehl1;
+        befehl2;
+    }
+-> anonyme Funktion, es wird eine Funktion erstellt und in der Variable run 
+gespeichert
+- Das Verhalten ist "eigentlich" identisch
+- Schreibweise 2 eher verwenden
+
+Funktionen als Parameter übergeben (Callback)
+- Problem: 
+    - Wir möchten eine asynchrone Aktion ausführen
+    - Aber sowas wie sleep(4) geht in JS nicht
+    - Das liegt darin, dass JS einen Eventlopp verwendet
+- Wie funktioniert das in JS? 
+    setTimeout(function () {
+        console.log("text");
+    });
+- BEACHTEN!
+    setTimeout(function() {
+        console.log("Hier steht Text");
+    },4000);
+    console.log("Fertig!");
+-> Der console.log-Befehl wird zuerst ausgegeben, DANN erst greift der 
+setTimeout
+- Nähere Infos später im Kurs
+
+Was sind die wichtigsten asynchronen Funktionen?
+- setTimeout(func, t) -> nach t Millisekunden wird eine Funktion ausgeführt
+- setInterval(func, t) -> eine Funktion wird alle t Millisekunden ausgeführt
+    let cnt = 0;
+    setInterval(function() {
+        cnt = cnt + 1;
+        console.log(cnt);
+    },1000);
+    -> Erhöht eine cnt-Variable jede Sekunde um 1
+- document.getElementById("element").addEventListener() -> EvenListener
+    window.addEventListener("load", function() {
+        document.getElementById("click-me").addEventListener("click", function() {
+            console.log("dgffdgd");
+        }, false);
+    });
+
+JavaScript im Browser: Das Document Object Model (DOM)
+- Der Browser stellt 2 wichtige Variablen zur Verfügung:
+    - document
+    - window
+    
+DOM: Zugriff auf Elemente
+- Baumstruktur (https://wiki.selfhtml.org/images/thumb/0/01/DOM-1.svg/1000px-DOM-1.svg.png)
+- document.children
+- document.getElementById("id")
+- document.getElementByClassName("class") 
+- document.getElementByTagName("tag")
+
+DOM: Reagieren auf Ereignisse
+- Wir möchten die Website interaktiv machen, deshalb:
+- 1. Auf das Element zugreifen
+- 2. Einen Event-Listener hinzufügen
+-> element.addEventListener("click", function() {...}, false);
+
+DOM: Daten in das DOM schreiben
+- element.innerHTML
+-> Auf HTML-Code zugreifen
+- element.innerText
+-> Zugriff auf Text-Inhalt
+- element.ClassName / ClassList
+-> Zugriff auf (CSS-)Klassen
+    - element.classList.add(); -> Klasse hinzufügen
+    - element.classList.remove(); -> Klasse entfernen
+- element.style
+-> Zugriff auf CSS-Attribute
+
+DOM: Neues Element erstellen
+- document.createElement("p")
+-> Erstellt ein neues p-Element
+- element.appendChild(a);
+-> Fügt a auf die Seite an der Stelle element ein
+
+DOM: Zugriff auf Elemente(2)
+- document.querySelector("selector") -> immer nur ein Element!
+- document.querySelectorAll("selector") 
+- wie CSS Selektoren
+
+Arrays
+- let persons = ["Peter", "Klaus"]
+- persons.length -> Anzahl der Elemente
+- persons[0] -> auf ein Element zugreifen
+- persons.push("Manuel") -> Element ans Ende hinzufügen
+- persons.unshift("Ulrich") -> Element an den Anfang hinzufügen
+- persons.pop() -> Letztes Element entfernen
+- persons.shift() -> Erstes Element entfernen
+
+For ... of Schleifen
+- für jedes Element im Array, vorallem bei unbekannter Größe
+    for(let element of persons){
+        console.log(element);
+    }
+
+Mehrdimensionale Arrays
+- Ist ein Array von Arrays
+    let persons = [
+        ["Andreas", "Manuel", "Hans-Peter"],
+        ["Paula", "Otto", "Friedrich"]
+    ];
+- for .. of Schleife über ALLE Personen
+    for(let course of persons){
+        for(let person of course){
+            console.log(person);
+        }
+    }
+
+If & Booleans
+    if(Bedingung && Bedingung2) {
+        Befehl1;
+    } else if(Bedingung3 || Bedingung) {
+        Befehl2;
+    } else {
+        Befehl3;
+    }
+- && -> Beide Bedingungen müssen True sein (Logische UND-Verknüpfung)
+- || -> Eine der Bedingungen muss True sein (Logisches ODER)
+

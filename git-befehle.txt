@@ -1,0 +1,10 @@
+git add *
+git commit -m "Sample message"
+git push -u origin master
+
+FÜR NEUE PROJEKTE:
+git init
+git add *
+git commit -m "first commit"
+git remote add origin https://github.com/borghoffd/reaktionstester.git
+git push -u origin master
